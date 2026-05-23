@@ -1,20 +1,8 @@
-"""
-Demon Algorithm for the 2D Ideal Gas
-Simulates N non-interacting particles in a square box with periodic boundaries.
-The demon exchanges kinetic energy with particles, providing temperature.
-Produces plots:
-- initial vs final particle positions
-- average kinetic energy per particle vs temperature (equipartition)
-- speed distribution compared to Maxwell-Boltzmann
-"""
 
 import numpy as np
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 
-# ==============================
-#   SYSTEM PARAMETERS
-# ==============================
 N = 100          # number of particles
 L = 20.0         # box side length
 mass = 1.0       # particle mass (k_B = 1)
@@ -29,14 +17,8 @@ thermal_steps = 200000
 prod_steps = 500000
 total_steps = thermal_steps + prod_steps
 
-# ==============================
-#   INITIALISATION
-# ==============================
 def initialise_system(T_init):
-    """
-    Create random positions and velocities sampled from a Maxwell-Boltzmann
-    distribution at temperature T_init.
-    """
+    
     # positions: random in [0, L)
     positions = np.random.rand(N, 2) * L
     # velocities: each component ~ N(0, sqrt(T/mass))
@@ -51,14 +33,9 @@ def apply_periodic(pos):
     pos[:, 0] %= L
     pos[:, 1] %= L
 
-# ==============================
-#   DEMON ALGORITHM STEP
-# ==============================
+
 def demon_velocity_move(velocities, kinetic, Ed, i, delta_v_max, mass):
-    """
-    Attempt to change velocity of particle i using the demon.
-    Returns updated velocities, kinetic, Ed, and acceptance flag.
-    """
+
     v_old = velocities[i].copy()
     # propose new velocity by adding random vector
     dv = np.random.uniform(-delta_v_max, delta_v_max, size=2)
@@ -80,18 +57,9 @@ def position_move(positions, i, delta_r_max, L):
     apply_periodic(positions)
     return positions
 
-# ==============================
-#   SINGLE SIMULATION RUN
-# ==============================
+
 def run_simulation(Ed_init, T_init=2.0):
-    """
-    Run one Demon algorithm simulation for a given initial demon energy.
-    Returns:
-        T: temperature from average demon energy
-        mean_ke_per_particle: average kinetic energy per particle
-        final_positions, final_velocities
-        list of speeds for histogram
-    """
+
     positions, velocities, kinetic = initialise_system(T_init)
     Ed = Ed_init
     # keep track of demon energy and kinetic energy during production
