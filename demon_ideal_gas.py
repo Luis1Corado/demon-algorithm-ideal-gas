@@ -122,7 +122,7 @@ def maxwell_boltzmann_2d(v, T, mass=1.0):
     """Normalised speed distribution for 2D ideal gas."""
     return (mass * v / T) * np.exp(-mass * v**2 / (2 * T))
 
-def analyse_demon_distribution(demon_energies, T_means):
+def analyse_demon_distribution(demon_energies, T_mean):
     fig, ax = plt.subplots(figsize=(7, 5))
     # histogram (normalised to probability density)
     counts, bins, patches = ax.hist(demon_energies, bins=50, density=True,
@@ -134,16 +134,16 @@ def analyse_demon_distribution(demon_energies, T_means):
     def exp_func(x, a, b):
         return a * np.exp(-b * x)
 
-    popt, _ = curve_fit(exp_func, bin_centers, counts, p0=[1.0, 1.0/T_means])
+    popt, _ = curve_fit(exp_func, bin_centers, counts, p0=[1.0, 1.0/T_mean])
     a_fit, b_fit = popt
     x_fit = np.linspace(0, max(bin_centers), 200)
     y_fit = exp_func(x_fit, a_fit, b_fit)
 
     # Theoretical curve: (1/T) * exp(-E/T)
-    y_theory = (1.0 / T_means) * np.exp(-x_fit / T_means)
+    y_theory = (1.0 / T_mean) * np.exp(-x_fit / T_mean)
 
     ax.plot(x_fit, y_fit, 'r-', label=f'Exponential fit: $b = {b_fit:.3f}$')
-    ax.plot(x_fit, y_theory, 'k--', label=f'Theory: $1/T \\cdot e^{{-E/T}}$, $T={T_means:.2f}$')
+    ax.plot(x_fit, y_theory, 'k--', label=f'Theory: $1/T \\cdot e^{{-E/T}}$, $T={T_mean:.2f}$')
     ax.set_xlabel('Demon energy $E_d$', fontsize=12)
     ax.set_ylabel('Probability density $P(E_d)$', fontsize=12)
     ax.set_title('Demon Energy Distribution')
@@ -154,10 +154,10 @@ def analyse_demon_distribution(demon_energies, T_means):
     plt.show()
 
     print(f"\nDemon energy distribution analysis:")
-    print(f"Measured temperature from <Ed> = {T_means:.4f}")
+    print(f"Measured temperature from <Ed> = {T_mean:.4f}")
     print(f"Fitted exponential decay constant b = {b_fit:.4f}")
-    print(f"Theoretical b (1/T) = {1.0/T_means:.4f}")
-    print(f"Ratio b / (1/T) = {b_fit * T_means:.4f} (should be ≈ 1)")
+    print(f"Theoretical b (1/T) = {1.0/T_mean:.4f}")
+    print(f"Ratio b / (1/T) = {b_fit * T_mean:.4f} (should be ≈ 1)")
 
 
 def energy_vs_temperature():
@@ -265,7 +265,7 @@ def main():
     # We already have 'speeds' and t_final from that run
     generate_speed_distribution(T_final, speeds)
 
-    # ---- 4) Speed distribution at a representative temperature ----
+    # ---- 4)  Demon energy distribution----
     analyse_demon_distribution(demon_energies, T_final)
 
 if __name__ == "__main__":
