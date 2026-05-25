@@ -163,7 +163,7 @@ def analyse_demon_distribution(demon_energies, T_means):
 def energy_vs_temperature():
     """
     Runs 20 simulations with values of Ed from 0.5 to 10.5 in a 0.5 interval. 
-    Saves data to ideal_gas_data.txt.
+    Saves data to ideal_gas_data.txt. Uses the tqdm library to show a progress bar of the simulations. 
     """
     print("Running multiple simulations for E vs T...")
     Ed_vals = np.arange(0.5, 10.5, 0.5)
