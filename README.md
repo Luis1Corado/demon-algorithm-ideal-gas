@@ -13,6 +13,7 @@ At equilibrium, the demon energy follows the exponential distribution `P(E_d) �
 The code reproduces three key results of the ideal gas:
 - Equipartition: `⟨K⟩/N = T` (in 2D).
 - Maxwell–Boltzmann speed distribution.
+- Demon energies distribution 
 - Uniform spatial distribution of particles.
 
 ## Code Structure
