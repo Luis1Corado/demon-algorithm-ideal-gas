@@ -25,7 +25,7 @@ The code reproduces three key results of the ideal gas:
 | `apply_periodic(pos)` | Wraps particle positions back into the box `[0, L)`. |
 | `demon_velocity_move(...)` | Attempts to change a particle’s velocity using the demon. Accepts if `ΔK ≤ E_d`. Updates `kinetic` and `E_d`. |
 | `position_move(...)` | Performs a random displacement of a particle (always accepted, because potential energy is zero). |
-| `run_simulation(Ed_init)` | Runs the full Monte Carlo simulation for a given initial demon energy. Returns temperature, average kinetic energy, final positions/velocities, and speed distribution. |
+| `run_simulation(Ed_init)` | Runs the full Monte Carlo simulation for a given initial demon energy. Returns temperature, average kinetic energy,initial poosition, final positions/velocities, and speed distribution and demon energies recorded |
 | `maxwell_boltzmann_2d(v, T)` | Theoretical speed distribution for a 2D ideal gas. |
 
 ### Simulation Parameters (tunable)
